@@ -5,18 +5,13 @@
  */
 package chatudpclient;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import chatudpclient.ReceiveFromServerAndPrint;
 
 /**
  *
@@ -28,8 +23,10 @@ public class ChatUDPclient {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws UnknownHostException {
-
-        String IP_address = "127.0.0.1";
+        
+        
+        
+        String IP_address = "10.100.7.200";
         InetAddress address = InetAddress.getByName(IP_address);
         int UDP_port = 1077;
 
@@ -38,14 +35,10 @@ public class ChatUDPclient {
         try {
 
             socket = new DatagramSocket();
-            
-
-            //creo il thread che riceve i messaggi dal server e scrive su schermo i messaggi ricevuti
             Thread receiveAndPrint = new Thread(new ReceiveFromServerAndPrint(socket));
             receiveAndPrint.start();
             System.out.println("sono in ascolto...");
 
-            //creo il thread che invia il messaggio digitato da utente verso il server
             Thread sendUserInput = new Thread(new SendUserInputToServer(socket, address, UDP_port));
             sendUserInput.start();
             System.out.println("utente e' invitato di inserire un messaggio da inviare al server...");
@@ -68,3 +61,4 @@ public class ChatUDPclient {
         }
     
 }
+
