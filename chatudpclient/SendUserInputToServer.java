@@ -37,12 +37,15 @@ public class SendUserInputToServer implements Runnable {
         String messaggio;
         Scanner tastiera = new Scanner(System.in);
         DatagramPacket userDatagram;
+        System.out.println("usarname: ");
+        String user= tastiera.nextLine();
 
         try {
             System.out.print("> ");
             do {
                 //Leggo da tastiera il messaggio utente vuole inviare
-                messaggio = tastiera.nextLine();
+                messaggio = user+": "+tastiera.nextLine();
+                
 
                 //Trasformo in array di byte la stringa che voglio inviare
                 buffer = messaggio.getBytes("UTF-8");
@@ -61,3 +64,4 @@ public class SendUserInputToServer implements Runnable {
     }
 
 }
+
