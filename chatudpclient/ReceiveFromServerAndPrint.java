@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +29,6 @@ public class ReceiveFromServerAndPrint implements Runnable {
         byte[] buffer = new byte[100];
         String received;
         DatagramPacket serverDatagram;
-
  
         try {
             // Costruisco il datagram per ricevere i pacchetti inviati dal server
@@ -39,7 +39,7 @@ public class ReceiveFromServerAndPrint implements Runnable {
                 //converto in string il messaggio contenuto nel buffer
                 received = new String(serverDatagram.getData(), 0, serverDatagram.getLength(), "ISO-8859-1");
                 //e quindi scrivo su schermo il messaggio appena ricevuto
-                System.out.println("> server: " + received);
+                System.out.println("> " + received);
                 //scrivo anche il prompt nel caso utente voglia digitare un altro messaggio da inviare
                 System.out.print("> ");
             }
