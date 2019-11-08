@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package serverudpchat;
 
 import java.io.IOException;
@@ -12,12 +7,13 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Prof Matteo Palitto
+ * @author Manzon Veronica
  */
 
 //utilizzo la classe Clients per memorizzare indirizzo e porta dei clients che si collegano al server
@@ -45,6 +41,8 @@ public class UDPEcho implements Runnable {
     }
 
     public void run() {
+        
+        LinkedList<String> dieciMessaggi = new LinkedList<String>();
         DatagramPacket answer; //datagram usato per creare il pacchetto di risposta
         byte[] buffer = new byte[8192]; //buffer per contenere il messaggio ricevuto o da inviare
         // creo un un datagramma UDP usando il buffer come contenitore per i messaggi
@@ -68,12 +66,26 @@ public class UDPEcho implements Runnable {
                 if(clients.get(clientID) == null) {
                     //nel caso sia la prima volta lo inserisco nella lista
                     clients.put(clientID, new Clients(client.addr, client.port)); 
+                    for (int i=0; i<dieciMessaggi.size();i++){
+                        answer = new DatagramPacket (dieciMessaggi.get(i).getBytes(), dieciMessaggi.get(i).getBytes().length,client.addr,client.port);
+                        socket.send(answer);
+                    }
+                
                 }
                 System.out.println(clients);
                 message = new String(request.getData(), 0, request.getLength(), "ISO-8859-1");
-                if(message == "quit") {
+                if(message.equals("quit")) {
                     //client si e' rimosso da chat, lo rimuovo da lista dei client connessi
                     clients.remove(clientID);
+                }
+                //serve per aggiornare gli ultimi 10 messaggi
+                if(dieciMessaggi.size()<10)
+                       
+                	dieciMessaggi.add(message);
+                else {
+                	
+                	dieciMessaggi.removeLast();
+                	dieciMessaggi.addFirst(message);
                 }
 
                 //invio il messaggio ricevuto a tutti i client connessi al server
