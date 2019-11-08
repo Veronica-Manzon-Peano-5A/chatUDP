@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Prof Matteo Palitto
+ * @author Manzon Veronica
  */
 public class ChatUDPclient {
 
@@ -26,7 +26,7 @@ public class ChatUDPclient {
         
         
         
-        String IP_address = "10.100.7.200";
+        String IP_address = "127.0.0.1";
         InetAddress address = InetAddress.getByName(IP_address);
         int UDP_port = 1077;
 

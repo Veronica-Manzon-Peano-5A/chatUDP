@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Prof Matteo Palitto 
+ * @author Manzon Veronica 
  */
 public class ReceiveFromServerAndPrint implements Runnable {
     DatagramSocket socket;
