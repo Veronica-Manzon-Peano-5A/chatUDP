@@ -48,7 +48,9 @@ public class Interface extends JFrame {
     
    
     public Interface() {
-
+        this.add(panel);
+        panel.add(titolo);
+        panel.add(areaChat);
         
         GroupLayout panelLayout = new GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -133,7 +135,7 @@ public class Interface extends JFrame {
                     byte[] buffer;
                     DatagramPacket packet;
                     
-                    String messaggioCompleto= nome+": "+mex;
+                    String messaggioCompleto= nome+"---> "+mex;
                     buffer= messaggioCompleto.getBytes("UTF-8");
                     packet= new DatagramPacket(buffer,buffer.length,indirizzo,port);
                     s.send(packet);
@@ -175,7 +177,6 @@ public class Interface extends JFrame {
         
         };
         ricezione.start();
-        areaChat.append("Connessione server riuscita"+'\n');
        
     }
     
